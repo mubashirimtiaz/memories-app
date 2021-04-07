@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
+import Typography from "@material-ui/core/Typography";
 
 function App() {
   return (
-    <div className="App">
-      Hello World
-    </div>
+    <Typography variant="h3" component="h1" color="textSecondary">
+      Hello, World
+    </Typography>
   );
 }
 
