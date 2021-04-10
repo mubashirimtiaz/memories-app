@@ -10,7 +10,7 @@ const Create = lazy(() => import("./components/form/Create.component"));
 
 const fetchMemories = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/post");
+    const response = await axios.get("/post");
     const memories = await response.data;
     return memories;
   } catch (error) {
