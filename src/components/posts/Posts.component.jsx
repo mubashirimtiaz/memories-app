@@ -26,7 +26,15 @@ const Posts = ({ refetch, isLoading, memories, error }) => {
         ))}
       </Masonry>
     );
-  if (error) return <p>Error...</p>;
+  if (error)
+    return (
+      <div className="flex justify-center items-center flex-col">
+        <h3 className="text-2xl text-gray-700 my-5">
+          Hi👋, Something went Wrong!
+        </h3>
+        <p className="text-xl text-gray-700">Please come back after a while.</p>
+      </div>
+    );
   if (!memories) {
     return (
       <div className="flex justify-center items-center flex-col">

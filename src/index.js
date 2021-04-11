@@ -10,7 +10,8 @@ import App from "./App";
 import "./index.css";
 
 //added default baseUrl to every http request
-axios.defaults.baseURL = "https://powerful-tor-86910.herokuapp.com";
+//https://powerful-tor-86910.herokuapp.com
+axios.defaults.baseURL = "https://powerful-tor-86910.herokuapp.com/";
 //added default config for header prop for every post request i.e Content-Type
 axios.defaults.headers.post["Content-Type"] = "application/json";
 //added default config for header prop for every post request i.e Accept

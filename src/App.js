@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import SplashScreen from "./components/splash_screen/Splash-Screen.component";
 import Loader from "./components/loading_state/Loader.component";
+import PostDetail from "./components/post_detail/Post-Detail.component";
 const Posts = lazy(() => import("./components/posts/Posts.component"));
 const Create = lazy(() => import("./components/form/Create.component"));
 
@@ -35,7 +36,7 @@ function App() {
             <Route exact path="/">
               <Redirect to="/posts" />
             </Route>
-            <Route path="/posts">
+            <Route exact path="/posts">
               <Posts
                 refetch={refetch}
                 isLoading={isLoading}
@@ -43,6 +44,9 @@ function App() {
                 error={error}
                 isFetching={isFetching}
               />
+            </Route>
+            <Route path="/posts/:id">
+              <PostDetail />
             </Route>
             <Route path="/create">
               <Create refetch={refetch} />

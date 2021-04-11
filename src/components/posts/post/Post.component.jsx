@@ -15,7 +15,10 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useHistory } from "react-router-dom";
 import { useDispatch, shallowEqual, useSelector } from "react-redux";
-import { deletePost, updateMemory } from "../../../redux/post/post.slice";
+import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { deletePost } from "../../../redux/post/post.slice";
+import axios from "axios";
 import {
   blue,
   green,
@@ -33,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: "56.25%", // 16:9
+  },
+  card: {
+    maxWidth: 350,
   },
   avatar: () => {
     const colors = [
@@ -52,7 +58,15 @@ const useStyles = makeStyles((theme) => ({
     };
   },
 }));
-
+const getLikes = async ({ queryKey }) => {
+  try {
+    const response = await axios.patch(`/post/${queryKey[1]}/likePost`, {});
+    const memory = await response.data;
+    return memory;
+  } catch (error) {
+    console.log(error);
+  }
+};
 const Post = ({
   title,
   createdAt,
@@ -64,6 +78,14 @@ const Post = ({
   _id: id,
   refetch,
 }) => {
+  const [likes, setLikes] = useState(likeCount);
+  const { refetch: reget, data, isFetched, error } = useQuery({
+    queryKey: ["getLikes", id],
+    queryFn: getLikes,
+    staleTime: Infinity,
+    enabled: false,
+  });
+  const likeFromServer = data && data.likeCount;
   const classes = useStyles();
   const history = useHistory();
   const { isPending } = useSelector(
@@ -77,20 +99,8 @@ const Post = ({
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleLikeCount = async () => {
-    // await setLikesCount(likesCount + 1);
-    await dispatch(
-      updateMemory({
-        id,
-        title,
-        createdAt,
-        creator,
-        likeCount: likeCount + 1,
-        selectedFile,
-        tags,
-        message,
-      })
-    );
-    await refetch();
+    await setLikes(likes + 1);
+    await reget();
   };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -105,6 +115,15 @@ const Post = ({
       refetch();
     });
   };
+  if (error)
+    return (
+      <div className="flex justify-center items-center flex-col">
+        <h3 className="text-2xl text-gray-700 my-5">
+          Hi👋, Something went Wrong!
+        </h3>
+        <p className="text-xl text-gray-700">Please come back after a while.</p>
+      </div>
+    );
   return (
     <Card elevation={3}>
       <CardHeader
@@ -157,18 +176,24 @@ const Post = ({
         title={title}
         subheader={moment(createdAt).format("MM-DD-YYYY")}
       />
-      <CardMedia className={classes.media} image={selectedFile} title={title} />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {message}
-        </Typography>
-      </CardContent>
+      <Link to={`/posts/${id}`}>
+        <CardMedia
+          className={classes.media}
+          image={selectedFile}
+          title={title}
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {message.slice(0, 120)}...
+          </Typography>
+        </CardContent>
+      </Link>
       <CardActions disableSpacing>
         <IconButton aria-label="hit like" onClick={handleLikeCount}>
           <ThumbUpAltOutlinedIcon />
         </IconButton>
         <Typography variant="body2" component="p" color="textSecondary">
-          {likeCount}
+          {!isFetched ? likes : likeFromServer}
         </Typography>
         <div className="ml-auto">
           {tags.map((tag) => (

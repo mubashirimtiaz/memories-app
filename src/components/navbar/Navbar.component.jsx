@@ -8,8 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
 import moment from "moment";
 import clsx from "clsx";
+import { useHistory } from "react-router-dom";
 import { teal } from "@material-ui/core/colors";
 
 const drawerWidth = 240;
@@ -42,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = ({ handleDrawerOpen, open }) => {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -52,6 +55,11 @@ const Navbar = ({ handleDrawerOpen, open }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogin = () => {
+    history.push("/auth");
+  };
+
+  const user = null;
   return (
     <AppBar
       position="fixed"
@@ -78,25 +86,33 @@ const Navbar = ({ handleDrawerOpen, open }) => {
           </p>
         </Typography>
         <div className="ml-auto cursor-pointer">
-          <Avatar
-            alt="User"
-            aria-label="User"
-            aria-controls="menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-            className={classes.avatar}
-          >
-            MA
-          </Avatar>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-          </Menu>
+          {user ? (
+            <>
+              <Avatar
+                alt="User"
+                aria-label="User"
+                aria-controls="menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+                className={classes.avatar}
+              >
+                MA
+              </Avatar>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <Button variant="contained" color="secondary" onClick={handleLogin}>
+              Login
+            </Button>
+          )}
         </div>
       </Toolbar>
     </AppBar>
