@@ -9,7 +9,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { AddCircleOutlineOutlined, SubjectOutlined } from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
@@ -106,9 +106,12 @@ export default function Layout({ children }) {
           onClick={handleDrawerOpen}
           onKeyDown={handleDrawerOpen}
         >
-          <Typography variant="h5" component="h1" color="secondary" noWrap>
+          {/* <Typography variant="h5" component="h1" color="secondary" noWrap>
             Ninja Memories
-          </Typography>
+          </Typography> */}
+          <div className="my-2">
+            <img src="/memory.svg" alt="memory" />
+          </div>
           <IconButton onClick={handleDrawerOpen}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
