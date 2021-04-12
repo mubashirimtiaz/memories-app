@@ -24,6 +24,7 @@ import {
   cyan,
   teal,
 } from "@material-ui/core/colors";
+import DetailSkeleton from "../detail_skeleton/Skeleton.component";
 
 const useStyles = makeStyles(() => ({
   media: {
@@ -67,7 +68,7 @@ const PostDetail = () => {
     queryFn: fetchMemory,
     staleTime: Infinity,
   });
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <DetailSkeleton />;
   if (error)
     return (
       <div className="flex justify-center items-center flex-col">
