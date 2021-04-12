@@ -106,14 +106,8 @@ const PostDetail = () => {
     <Container maxWidth="lg">
       <Grid container>
         <div className="mb-3">
-          <Typography
-            variant="h3"
-            component="h1"
-            gutterBottom
-            color="textSecondary"
-          >
-            {title}
-          </Typography>
+          <h3 className="text-2xl md:text-4xl text-gray-500 mb-2">{title}</h3>
+          {/* </Typography> */}
           <Typography variant="h6" component="h3" color="textSecondary">
             Created By:{" "}
             <span className="text-pink-500">{creator.toUpperCase()}</span>
