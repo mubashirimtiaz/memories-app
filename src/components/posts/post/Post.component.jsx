@@ -96,7 +96,6 @@ const Post = ({
     shallowEqual
   );
   const dispatch = useDispatch();
-  console.log(selectedFilePublicID);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
