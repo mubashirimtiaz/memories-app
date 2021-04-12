@@ -3,7 +3,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import Container from "@material-ui/core/Container";
 const DetailSkeleton = () => {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md">
       <Typography variant="h3" component="h3" gutterBottom>
         <Skeleton style={{ width: "60%" }} />
       </Typography>

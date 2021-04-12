@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { IconButton, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -9,6 +9,7 @@ import Container from "@material-ui/core/Container";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
@@ -103,7 +104,7 @@ const PostDetail = () => {
     creator,
   } = memory;
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md">
       <Grid container>
         <div className="mb-3">
           <h3 className="text-2xl md:text-4xl text-gray-500 mb-2">{title}</h3>

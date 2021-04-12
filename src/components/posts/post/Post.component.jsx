@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
+// import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core";
@@ -13,6 +13,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Image, Transformation } from "cloudinary-react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, shallowEqual, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -179,11 +180,14 @@ const Post = ({
         subheader={moment(createdAt).format("MM-DD-YYYY")}
       />
       <Link to={`/posts/${id}`}>
-        <CardMedia
-          className={classes.media}
-          image={selectedFile}
-          title={title}
-        />
+        <Image
+          cloudName="arm-enterprises"
+          width="480"
+          publicId={selectedFilePublicID}
+          crop="scale"
+        >
+          <Transformation quality="auto" fetchFormat="auto" />
+        </Image>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {message.slice(0, 120)}...
