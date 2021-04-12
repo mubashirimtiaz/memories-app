@@ -11,6 +11,7 @@ import "./index.css";
 
 //added default baseUrl to every http request
 //https://powerful-tor-86910.herokuapp.com
+// http://localhost:5000
 axios.defaults.baseURL = "https://powerful-tor-86910.herokuapp.com";
 //added default config for header prop for every post request i.e Content-Type
 axios.defaults.headers.post["Content-Type"] = "application/json";

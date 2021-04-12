@@ -73,6 +73,7 @@ const Post = ({
   creator,
   likeCount,
   selectedFile,
+  selectedFilePublicID,
   tags,
   message,
   _id: id,
@@ -95,6 +96,7 @@ const Post = ({
     shallowEqual
   );
   const dispatch = useDispatch();
+  console.log(selectedFilePublicID);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -160,6 +162,7 @@ const Post = ({
                     selectedFile,
                     tags,
                     message,
+                    selectedFilePublicID,
                     _id: id,
                   })
                 }

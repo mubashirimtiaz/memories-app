@@ -112,6 +112,7 @@ const Create = ({ refetch }) => {
             updateMemory({
               id: state._id,
               selectedFile,
+              selectedFilePublicID: state.selectedFilePublicID,
               createdAt: state.createdAt,
               title,
               message,
