@@ -1,10 +1,13 @@
+import { useState } from "react";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
-import { makeStyles } from "@material-ui/core";
+import { Avatar, makeStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Select from "react-select";
 import { postMemory, updateMemory } from "../../redux/post/post.slice";
@@ -12,6 +15,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import FileBase from "react-file-base64";
 import Spinner from "../spinner/Spinner.component";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 const validationSchema = yup.object({
   title: yup
@@ -38,7 +42,7 @@ const validationSchema = yup.object({
     .required("Memory Media is required"),
 });
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   field: {
     display: "block",
     marginTop: 20,
@@ -56,11 +60,13 @@ const useStyles = makeStyles({
   reset: {
     marginLeft: 5,
   },
-});
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+}));
 
 const Create = ({ refetch }) => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const { state } = useLocation();
   const Prevtags =
     state &&
@@ -68,6 +74,11 @@ const Create = ({ refetch }) => {
       label: tag,
       value: tag.toLowerCase(),
     }));
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [filePreview, setFilePreview] = useState(
+    state ? state.selectedFile : ""
+  );
   const options = [
     { value: "left", label: "Open Left" },
     { value: "right", label: "Open Right" },
@@ -206,17 +217,43 @@ const Create = ({ refetch }) => {
           // </FormHelperText>
         )}
         <div
-          className={`block mt-5 border ${
+          className={`block flex items-center space-x-5 mt-5 border ${
             Boolean(formik.errors.media) && formik.touched.media
               ? "border-red-500"
               : "border-gray-300"
           } rounded p-2`}
         >
+          {filePreview && (
+            <>
+              <div className="flex space-x-2 items-center">
+                <div>
+                  <IconButton
+                    onClick={() => {
+                      setFilePreview("");
+                      formik.setFieldValue("media", "");
+                    }}
+                    size="small"
+                  >
+                    <HighlightOffIcon />
+                  </IconButton>
+                </div>
+                <Avatar
+                  alt="File Preview"
+                  src={filePreview}
+                  className={classes.large}
+                />
+              </div>
+              <Divider orientation="vertical" flexItem />
+            </>
+          )}
           <FileBase
             type="file"
             multiple={false}
             name="media"
-            onDone={({ base64 }) => formik.setFieldValue("media", base64)}
+            onDone={({ base64 }) => {
+              formik.setFieldValue("media", base64);
+              setFilePreview(base64);
+            }}
             onBlur={(event) => formik.setFieldTouched("media", event)}
             onChange={(event) => formik.setFieldTouched("media", event)}
           />
