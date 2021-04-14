@@ -217,7 +217,7 @@ const Create = ({ refetch }) => {
           // </FormHelperText>
         )}
         <div
-          className={`block flex items-center space-x-5 mt-5 border ${
+          className={`block flex items-center space-x-5 mt-5 border h-20 px-3 ${
             Boolean(formik.errors.media) && formik.touched.media
               ? "border-red-500"
               : "border-gray-300"
