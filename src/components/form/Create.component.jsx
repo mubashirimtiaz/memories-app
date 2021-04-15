@@ -96,10 +96,10 @@ const Create = ({ refetch }) => {
     : options.filter((option) => !state.tags.includes(option.label));
   const formik = useFormik({
     initialValues: {
-      title: state ? state.title : "",
-      detail: state ? state.message : "",
-      creator: state ? state.creator : "",
-      media: state ? state.selectedFile : "",
+      title: state?.title ?? "",
+      detail: state?.message ?? "",
+      creator: state?.creator ?? "",
+      media: state?.selectedFile ?? "",
       tags: state ? Prevtags : [],
     },
 
@@ -217,7 +217,7 @@ const Create = ({ refetch }) => {
           // </FormHelperText>
         )}
         <div
-          className={`block flex items-center space-x-5 mt-5 border h-20 px-3 ${
+          className={`block flex flex-col md:flex-row items-center space-y-2 space-x-5 mt-5 border  px-3 ${
             Boolean(formik.errors.media) && formik.touched.media
               ? "border-red-500"
               : "border-gray-300"
